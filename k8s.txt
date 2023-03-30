@@ -1,7 +1,7 @@
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 
-echo "version = 2
+echo 'version = 2
 [plugins]
   [plugins."io.containerd.grpc.v1.cri"]
    [plugins."io.containerd.grpc.v1.cri".containerd]
@@ -9,7 +9,7 @@ echo "version = 2
         [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
           runtime_type = "io.containerd.runc.v2"
        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
-            SystemdCgroup=true" > /etc/containerd/config.toml
+            SystemdCgroup=true' > /etc/containerd/config.toml
 
   
 
