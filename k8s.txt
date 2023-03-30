@@ -1,0 +1,46 @@
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+echo "version = 2
+[plugins]
+  [plugins."io.containerd.grpc.v1.cri"]
+   [plugins."io.containerd.grpc.v1.cri".containerd]
+      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+       [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+            SystemdCgroup=true" > /etc/containerd/config.toml
+
+  
+
+systemctl restart containerd
+
+
+apt-get update
+apt-get install -y apt-transport-https ca-certificates curl
+
+curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+apt-get update
+
+apt-get install -y kubelet kubeadm kubectl
+
+
+apt-mark hold kubelet kubeadm kubectl
+
+echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> /root/.bashrc
+
+
+kubeadm init
+
+
+
+
+
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
+
+kubectl apply -f calico.yaml
